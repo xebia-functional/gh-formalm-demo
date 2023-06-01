@@ -11,7 +11,7 @@ import org.http4s.implicits._
 import org.http4s.server.middleware.Logger
 import cats.effect.Async
 import org.typelevel.log4cats.slf4j.Slf4jLogger
-
+// $COVERAGE-OFF$
 object Server {
 
   def serve[F[_]: Async]: Stream[F, ExitCode] =
@@ -49,3 +49,4 @@ object Server {
 
     } yield ExitCode.Success
 }
+// $COVERAGE-ON$

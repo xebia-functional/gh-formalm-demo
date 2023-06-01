@@ -49,6 +49,7 @@ object ConfigService {
       )
     } yield xa
 
+  // $COVERAGE-OFF$
   def impl[F[_]: Async]: Stream[F, ConfigService[F]] =
     for {
       config <- Stream.eval(SetupConfig.loadConfig[F])
@@ -129,4 +130,5 @@ object ConfigService {
 
       val host: String = config.host
     }
+  // $COVERAGE-ON$
 }

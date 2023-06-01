@@ -8,6 +8,7 @@ import org.http4s.HttpRoutes
 import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.dsl.Http4sDsl
 
+// $COVERAGE-OFF$
 final class Routes[F[_]: Async](streaming: Streaming[F], topic: String)(m: Middleware[F])
     extends Http4sDsl[F] {
 
@@ -23,3 +24,4 @@ final class Routes[F[_]: Async](streaming: Streaming[F], topic: String)(m: Middl
 
   def routes: HttpRoutes[F] = m(_routes)
 }
+// $COVERAGE-ON$

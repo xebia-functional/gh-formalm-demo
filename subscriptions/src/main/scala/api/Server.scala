@@ -1,6 +1,6 @@
 package api
 
-import cats.effect.ExitCode
+import cats.effect.{Async, ExitCode, IO}
 import config.ConfigService
 import database.DatabaseService
 import fs2.Stream
@@ -12,8 +12,7 @@ import org.http4s.implicits._
 import org.http4s.server.Router
 import services.Subscriptions
 import org.http4s.server.middleware.Logger
-import org.http4s.server.staticcontent.{fileService, FileService}
-import cats.effect.Async
+import org.http4s.server.staticcontent.{FileService, fileService}
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 
 object Server {
@@ -31,6 +30,8 @@ object Server {
         Uri
           .fromString(config.github.baseUrl)
           .getOrElse(Uri.unsafeFromString("https://api.github.com/repos/"))
+
+      _ = IO.println("Starting server...")
 
       kafkaProducer             <- KafkaProducer.stream(producerSettings)
       notificationKafkaProducer <- KafkaProducer.stream(notificationProducerSettings)

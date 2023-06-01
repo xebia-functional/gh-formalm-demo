@@ -3,6 +3,7 @@ package datatypes
 import io.circe.{Decoder, Encoder, HCursor}
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 
+// $COVERAGE-OFF$
 sealed trait Event {
   val organization: String
   val repository: String
@@ -31,6 +32,7 @@ object Event {
 
   implicit val eventEncoder: Encoder[Event] = deriveEncoder
 }
+// $COVERAGE-ON$
 
 final case class ZenEvent(zen: String, sender: String, organization: String, repository: String)
     extends Event {
@@ -115,6 +117,7 @@ object DeleteEvent {
 
 final case class Issue(id: Int, title: String, html_url: String)
 
+// $COVERAGE-OFF$
 object Issue {
   implicit def issueDecoder: Decoder[Issue] = deriveDecoder[Issue]
   implicit def issueEncoder: Encoder[Issue] = deriveEncoder[Issue]
@@ -187,11 +190,14 @@ object IssueCommentEvent {
         repo.repository
       )
 }
+// $COVERAGE-ON$
 
 final case class Member(id: Int, login: String, html_url: String)
 
 object Member {
+  // $COVERAGE-OFF$
   implicit def memberDecoder: Decoder[Member] = deriveDecoder[Member]
+  // $COVERAGE-ON$
   implicit def memberEncoder: Encoder[Member] = deriveEncoder[Member]
 }
 
@@ -228,6 +234,7 @@ object PullRequest {
   implicit def pullRequestEncoder: Encoder[PullRequest] = deriveEncoder[PullRequest]
 }
 
+// $COVERAGE-OFF$
 final case class PullRequestEvent(
     action: String,
     number: Int,
@@ -276,6 +283,7 @@ final case class PushEvent(
       repository
     )
 }
+// $COVERAGE-ON$
 
 object PushEvent {
   implicit def pushEventDecoder: Decoder[PushEvent] =

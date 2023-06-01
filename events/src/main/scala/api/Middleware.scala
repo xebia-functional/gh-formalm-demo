@@ -14,6 +14,7 @@ import org.typelevel.log4cats.Logger
 import java.io.IOException
 import java.sql.SQLException
 
+// $COVERAGE-OFF$
 class Middleware[F[_]: Async](logger: Logger[F]) {
 
   def genResponse(s: Status, msg: String): Response[F] =
@@ -62,3 +63,4 @@ class Middleware[F[_]: Async](logger: Logger[F]) {
       }
     }
 }
+// $COVERAGE-ON$

@@ -14,7 +14,7 @@ jobs:
   check1:
     name: Check on ${{ matrix.os.runner }}
     runs-on: ${{ matrix.os }}
-    container: ghcr.io/xebia-functional/formalm:safe-parsing
+    container: ghcr.io/xebia-functional/formalm:main
     permissions:
       contents: read  #  to fetch code (actions/checkout)
       packages: read  #  to fetch packages (docker)
@@ -54,9 +54,9 @@ jobs:
       - name: Setting up OPENAI token
         run: echo "OPENAI_TOKEN=${{ secrets.OPENAI_TOKEN }} " >> $GITHUB_ENV
       - name: Setting up OPENAI request timeout
-        run: echo "OPENAI_REQUEST_TIMEOUT=90" >> $GITHUB_ENV
+        run: echo "OPENAI_REQUEST_TIMEOUT=40" >> $GITHUB_ENV
       - name: Run FormaLM analysis
-        run: java -jar /home/gradle/formalm/formalm-0.0.1-SNAPSHOT.jar $GITHUB_WORKSPACE /home/gradle/report.sarif scoverage-include-var=false scoverage-restrict-results=5
+        run: java -jar /home/gradle/formalm/formalm-0.0.1-SNAPSHOT.jar repo-path="$GITHUB_WORKSPACE" output-path="/home/gradle/report.sarif" scoverage-include-var=false scoverage-restrict-results=5
       - name: Show SARIF file
         run: cat /home/gradle/report.sarif
       - name: 'Upload Artifact'

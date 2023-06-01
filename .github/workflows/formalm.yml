@@ -59,6 +59,12 @@ jobs:
         run: java -jar /home/gradle/formalm/formalm-0.0.1-SNAPSHOT.jar $GITHUB_WORKSPACE /home/gradle/report.sarif scoverage-include-var=false scoverage-restrict-results=5
       - name: Show SARIF file
         run: cat /home/gradle/report.sarif
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: sbtOutput
+          path: /home/gradle/sbt-output.txt
+          retention-days: 2
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:

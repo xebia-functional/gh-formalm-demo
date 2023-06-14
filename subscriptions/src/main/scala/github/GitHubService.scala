@@ -12,7 +12,7 @@ trait GitHubService[F[_]] {
   def checkIfReposExist(
       repositoryList: RepositoryList
   )(implicit e: Applicative[F]): F[List[Repository]] =
-    repositoryList.subscriptions.traverse(checkValidRepo)
+    repositoryList.subscriptions.map(checkValidRepo).sequence
   def checkValidRepo(r: Repository): F[Repository]
 }
 

@@ -41,7 +41,7 @@ class Middleware[F[_]: Async](logger: Logger[F]) {
       .error(e.getMessage)
       .as(genResponse(Status.Accepted, s"Oops, something went wrong: ${e.getMessage}"))
 
-  val handleError: KnownErrors => F[Response[F]] = {
+  var handleError: KnownErrors => F[Response[F]] = {
     case e: WebhookError          => badRequest(e)
     case e: CommandNotImplemented => notImplemented(e)
     case e: InvalidRepoName       => badRequest(e)
